@@ -1,0 +1,23 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+// config on less secure apps
+$config['useragent'] = 'CodeIgniter';
+$config['protocol'] = 'smtp';
+//$config['mailpath'] = '/usr/sbin/sendmail';
+$config['smtp_host'] = 'ssl://smtp.gmail.com';
+$config['smtp_user'] = 'forwodians.basketbal@gmail.com';
+$config['smtp_pass'] = 'Lvv18^I@DqQ%asT3ZjbF';
+$config['smtp_port'] = 465; 
+//$config['smtp_port'] = 587; 
+$config['starttls'] = TRUE;
+$config['smtp_crypto'] = 'tls';
+$config['smtp_timeout'] = 5;
+$config['wordwrap'] = TRUE;
+$config['wrapchars'] = 76;
+$config['mailtype'] = 'html';
+$config['charset'] = 'utf-8';
+$config['validate'] = FALSE;
+$config['priority'] = 3;
+$config['crlf'] = "\r\n";
+$config['newline'] = "\r\n";
+$config['bcc_batch_mode'] = FALSE;
+$config['bcc_batch_size'] = 200;

@@ -1,0 +1,9 @@
+<IfModule mod_env.c>
+    SetEnv CI_ENV testing
+</IfModule>
+<IfModule authz_core_module>
+    Require all denied
+</IfModule>
+<IfModule !authz_core_module>
+    Deny from all
+</IfModule>
