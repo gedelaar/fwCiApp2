@@ -34,14 +34,22 @@ class Leden_model extends CI_Model {
     public $barMailYes;
     public $barMailNo;
     public $barMailNever;
-    private $db;
 
 //put your code here
     function __construct() {
         parent::__construct();
-        // $this->load->database();
+        //$this->load->database();
 //        define('DATE_ICAL', 'Ymd\THis');
         $this->output->enable_profiler($this->config->item('profiler'));
+    }
+
+    public function setId($int) {
+        $this->id = $int;
+        return true;
+    }
+
+    public function getId() {
+        return $this->id;
     }
 
     function leden_getall() {
@@ -68,12 +76,8 @@ class Leden_model extends CI_Model {
     }
 
     public function CheckId($id = null) {
-        $this->id = 0;
-        if (isset($id)) {
-            if (strlen($id) > 0) {
-                $this->id = substr($id, 1, substr($id, 0, 1));
-                return true;
-            }
+        if (isset($this->id)) {
+            return true;
         }
         return false;
     }
@@ -88,15 +92,15 @@ class Leden_model extends CI_Model {
      * ******************* */
 
     public function DetectIdFromMail($string) {
-        $lenLen = strpos($string, 1);
-        $lenId = strpos($string, $lenLen, 1);
-        $this->id = strpos($string, $lenId, $lenLen + 1);
-        $this->antwoord_bardienst = strpos($string, 1, $lenId + $lenLen + 1);
+        $lenLen = substr($string, 0, 1);
+        $lenId = substr($string, $lenLen, $lenLen);
+        $this->id = substr($string, $lenLen + 1, $lenId);
+        $this->antwoord_bardienst = substr($string, $lenId + $lenLen + 1, 1);
     }
 
     public function CreateIdForMailYes() {
         if ($this->CheckId()) {
-            $this->barMailYes = $this->CreateIdForMail($barYes);
+            $this->barMailYes = $this->CreateIdForMail($this->barYes);
             return TRUE;
         }
         return FALSE;
@@ -104,7 +108,7 @@ class Leden_model extends CI_Model {
 
     public function CreateIdForMailNo() {
         if ($this->CheckId()) {
-            $this->barMailNo = $this->CreateIdForMail($barNo);
+            $this->barMailNo = $this->CreateIdForMail($this->barNo);
             return TRUE;
         }
         return FALSE;
@@ -112,7 +116,7 @@ class Leden_model extends CI_Model {
 
     public function CreateIdForMailNever() {
         if ($this->CheckId()) {
-            $this->barMailNever = $this->CreateIdForMail($barNever);
+            $this->barMailNever = $this->CreateIdForMail($this->barNever);
             return TRUE;
         }
         return FALSE;

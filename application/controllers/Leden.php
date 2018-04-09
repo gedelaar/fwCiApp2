@@ -63,6 +63,23 @@ class Leden extends CI_Controller {
         return $this->objBardienst->vul_opendiensten_in();
     }
 
+    public function CreateMailId() {
+        $this->objBardienst->setId(204599000);
+        $this->objBardienst->CreateIdForMailYes();
+        print_r($this->objBardienst->barMailYes);
+        $this->objBardienst->DetectIdFromMail($this->objBardienst->barMailYes);
+        echo "<br><pre>";
+        print_r($this->objBardienst);
+        echo "</pre>";
+
+        $this->objBardienst->CreateIdForMailNo();
+        print_r($this->objBardienst->barMailNo);
+        $this->objBardienst->DetectIdFromMail($this->objBardienst->barMailNo);
+        echo "<br><pre>";
+        print_r($this->objBardienst);
+        echo "</pre>";
+    }
+
     /*
       private function CreateNewId($id) {
       return(substr($id, 1, substr($id, 0, 1)));
