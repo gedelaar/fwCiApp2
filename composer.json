@@ -17,11 +17,16 @@
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
 	},
         "require-dev": {
-        "phpunit/phpunit-skeleton-generator": "*"
+        "phpunit/phpunit-skeleton-generator": "*",
+		"apigen/apigen": "^4.1"
         },
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.*",
 		"phpunit/phpunit": "4.* || 5.*",
 		"kenjis/ci-phpunit-test": "^0.16.0"
-	}
+	},
+        "require": {
+                "apigen/apigen": "dev-master",
+                "roave/better-reflection": "dev-master#c87d856"
+    }
 }

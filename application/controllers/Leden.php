@@ -10,69 +10,108 @@
  *
  * @author Gerard
  */
-class leden extends CI_Controller {
+class Leden extends CI_Controller {
+
+    var $objBardienst;
 
     //put your code here
+    function __construct() {
+        parent::__construct();
+        $this->objBardienst = new leden_model();
+        //$this->load->helper(form);
+    }
 
     function getall() {
-        $data['query'] = $this->leden_model->leden_getall();
+        $data['query'] = $this->Leden_model->leden_getall();
         $this->load->view('leden_getall', $data);
     }
 
-    function nobardienst($id) {
-        $this->UpdateBardienst($id, 9);
-    }
-
-    function neverbardienst($id) {
-        $this->UpdateBardienst($id, 8);
-    }
-
-    function yesbardienst($id) {
-        $this->UpdateBardienst($id, 2);
-        echo "Uw reactie is verwerkt. Bedankt hiervoor.";
-    }
-
-    private function UpdateBardienst($id, $code) {
-        if ($id < 5) {
-            $this->leden_model->leden_yesbar($this->CreateNewId($id), $code);
-            $this->feedback_mail();
-        } else {
-            $this->leden_model->leden_nobar($this->CreateNewId($id), $code);
-            $this->feedback_mail();
-            $this->mail_all();
+    public function bardienst($antwoord, $id) {
+        if ($this->CheckAntwoord($antwoord)) {
+            if ($this->CheckId($id)) {
+                $this->UpdateBardienst();
+                $this->VulDiensten();
+                //$this->feedback_mail();
+                //$this->mail_all();
+            }
         }
     }
 
-    private function CreateNewId($id) {
-        return(substr($id, 1, substr($id, 0, 1)));
+    function VulDiensten() {
+        $this->VulBarInit();
+        //$this->leden_model->vul_chauffeur_init();
+        $this->VulOpenDienstenIn();
     }
 
-    function vul_diensten() {
-        $this->load->model('functions');
-        $data['query'] = $this->leden_model->vul_bar_init();
-        $data['query'] = $this->leden_model->vul_chauffeur_init();
-        $data['query'] = $this->leden_model->vul_opendiensten_in();
-        echo "De diensten zijn ingevuld.";
+    public function CheckAntwoord($antwoord = null) {
+        return $this->objBardienst->CheckAntwoord($antwoord);
     }
+
+    public function CheckId($id = null) {
+        return $this->objBardienst->CheckId($id);
+    }
+
+    public function UpdateBardienst() {
+        return $this->objBardienst->UpdateBardienst();
+    }
+
+    public function VulBarInit() {
+        return $this->objBardienst->vul_bar_init();
+    }
+
+    public function VulOpenDienstenIn() {
+        return $this->objBardienst->vul_opendiensten_in();
+    }
+
+    /*
+      private function CreateNewId($id) {
+      return(substr($id, 1, substr($id, 0, 1)));
+      }
+
+      function nobardienst($id) {
+      $this->UpdateBardienst($id, 9);
+      }
+
+      function neverbardienst($id) {
+      $this->UpdateBardienst($id, 8);
+      }
+
+      function yesbardienst($id) {
+      $this->UpdateBardienst($id, 2);
+      echo "Uw reactie is verwerkt. Bedankt hiervoor.";
+      }
+
+      private function UpdateBardienstxx($id, $code) {
+      if ($id < 5) {
+      $this->leden_model->leden_yesbar($this->CreateNewId($id), $code);
+      $this->feedback_mail();
+      } else {
+      $this->leden_model->leden_nobar($this->CreateNewId($id), $code);
+      $this->feedback_mail();
+      $this->mail_all();
+      }
+      }
+     */
 
     //toevoegen van een lid dat geen bardienst hoeft te draaien
     function bar_uitzondering_lid($id) {
-        $this->leden_model->vul_uitzondering_lid_in($id);
+        return $this->leden_model->vul_uitzondering_lid_in($id);
     }
 
     //toevoegen van een team cq poule dat geen bardienst draait.
     function bar_uitzondering_team($poule) {
-        $this->leden_model->vul_uitzondering_team_in($poule);
+        return $this->leden_model->vul_uitzondering_team_in($poule);
     }
 
     function mail_all() {
         $this->leden_model->mail_selection();
         echo "Uw reactie is verwerkt. Bedankt hiervoor.";
         echo "De mail is verzonden.";
+        return;
     }
 
     function feedback_mail() {
-        $this->leden_model->mail_selection_feedback();
+        return $this->leden_model->mail_selection_feedback();
     }
 
     function herinner_bar_mail() {
@@ -104,6 +143,12 @@ class leden extends CI_Controller {
         echo $this->email->print_debugger();
     }
 
+    function test_mail2() {
+        $this->load->model('Sendmails');
+        $this->sendmails->htmlmail;
+//        $this->load->view('sendmails');
+    }
+
     function email_aanpassing($lidnr, $new_email) {
         $this->load->model('leden_model');
         $this->leden_model->email_aanpassing_uitvoeren($lidnr, $new_email);
@@ -126,7 +171,7 @@ class leden extends CI_Controller {
         //$data['csvData'] = $this->csvreader->parse_file($filePath);
         //$this->load->view('csv_view', $data);
         $this->load->model('mod_wedstrijd');
-        //$this->rxml_wedstrijd(); => is niet zo nodig
+        //$this->rxml_wedstrijd(); => is niet zo nodig 
         $this->mod_wedstrijd->csv_to_sql();
         //$this->mail_officials();
         echo "<br>Scheidsrechters en tafelaars zijn ingelezen";

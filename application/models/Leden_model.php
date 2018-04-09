@@ -28,6 +28,13 @@ class Leden_model extends CI_Model {
     public $uit_ploeg;
     public $antwoord_bardienst;
     protected $table = 'leden';
+    protected $barYes = 2;
+    protected $barNo = 9;
+    protected $barNever = 8;
+    public $barMailYes;
+    public $barMailNo;
+    public $barMailNever;
+    private $db;
 
 //put your code here
     function __construct() {
@@ -69,6 +76,50 @@ class Leden_model extends CI_Model {
             }
         }
         return false;
+    }
+
+    /*     * *******************
+     * 1 lengte van de lengte van de string
+     * 2 lengte van de string
+     * 3 de string zelf
+     * 4 de code 
+     * 5 restant is ballast
+     * 
+     * ******************* */
+
+    public function DetectIdFromMail($string) {
+        $lenLen = strpos($string, 1);
+        $lenId = strpos($string, $lenLen, 1);
+        $this->id = strpos($string, $lenId, $lenLen + 1);
+        $this->antwoord_bardienst = strpos($string, 1, $lenId + $lenLen + 1);
+    }
+
+    public function CreateIdForMailYes() {
+        if ($this->CheckId()) {
+            $this->barMailYes = $this->CreateIdForMail($barYes);
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function CreateIdForMailNo() {
+        if ($this->CheckId()) {
+            $this->barMailNo = $this->CreateIdForMail($barNo);
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function CreateIdForMailNever() {
+        if ($this->CheckId()) {
+            $this->barMailNever = $this->CreateIdForMail($barNever);
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    private function CreateIdForMail($code) {
+        return strlen(strlen($this->id)) . strlen($this->id) . $this->id . $code . now();
     }
 
     public function UpdateBardienst() {
