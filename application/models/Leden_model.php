@@ -92,10 +92,37 @@ class Leden_model extends CI_Model {
      * ******************* */
 
     public function DetectIdFromMail($string) {
-        $lenLen = substr($string, 0, 1);
-        $lenId = substr($string, $lenLen, $lenLen);
-        $this->id = substr($string, $lenLen + 1, $lenId);
-        $this->antwoord_bardienst = substr($string, $lenId + $lenLen + 1, 1);
+        if ($this->CheckString($string, 10)) {
+            $lenLen = $this->CheckstringLen($string);
+            $lenId = $this->CheckstringIdLen($string, $lenLen, $lenLen);
+            $this->id = $this->GetIdFromString($string, $lenLen + 1, $lenId);
+            $this->antwoord_bardienst = $this->GetAntwoordBardienstFromString($string, $lenId + $lenLen + 1, 1);
+            return true;
+        }
+        return FALSE;
+    }
+
+    public function CheckString($string, $len) {
+        if (strlen($string) > $len) {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function CheckstringLen($string) {
+        return substr($string, 0, 1);
+    }
+
+    public function CheckstringIdLen($string, $len) {
+        return substr($string, $len, $len);
+    }
+
+    public function GetIdFromString($string, $len, $lenId) {
+        return substr($string, $len + 1, $lenId);
+    }
+
+    public function GetAntwoordBardienstFromString($string, $len, $start) {
+        return substr($string, $len, $start);
     }
 
     public function CreateIdForMailYes() {
@@ -131,6 +158,7 @@ class Leden_model extends CI_Model {
             if ($this->antwoord_bardienst == 8) {
                 $this->bar_statusupdate($this->antwoord_bardienst, 0, 0, $this->lidnummer);
                 $this->add_bardienst(0, $this->poule, $this->code, "");
+                return TRUE;
             } else {
                 if ($this->dienst <> '9') {
                     $this->bar_statusupdate($this->antwoord_bardienst, $this->poule, $this->code, $this->lidnummer);
@@ -138,8 +166,10 @@ class Leden_model extends CI_Model {
                         $this->add_bardienst(0, $this->poule, $this->code, "");
                     }
                 }
+                return TRUE;
             }
         }
+        return false;
     }
 
     private function retrieve_db() {
@@ -152,7 +182,9 @@ class Leden_model extends CI_Model {
 
         if ($query->num_rows() > 0) {
             return ($this->get_bar_from_id());
+            return true;
         }
+        return FALSE;
     }
 
     function bar_statusupdate($status, $poule, $code, $lidnummer) {

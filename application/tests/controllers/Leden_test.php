@@ -30,12 +30,13 @@ class Leden_test extends TestCase {
         $this->assertFalse(false, $output);
     }
 
-    public function test_UpdateBardienst() {
-        $obj = new Leden_model();
-        $obj->id = 78864;
-        $output = $this->request('GET', 'Leden/UpdateBardienst');
-        $this->assertTrue(true, $output);
-    }
+    /* public function test_UpdateBardienst() {
+      $obj = new Leden_model();
+      $obj->id = 78864;
+      $obj->antwoord_bardienst = 1;
+      $output = $this->request('GET', 'Leden/UpdateBardienst');
+      $this->assertTrue(true, $output);
+      } */
 
     public function test_retrieve_db() {
         

@@ -26,15 +26,16 @@ class Leden extends CI_Controller {
         $this->load->view('leden_getall', $data);
     }
 
-    public function bardienst($antwoord, $id) {
-        if ($this->CheckAntwoord($antwoord)) {
-            if ($this->CheckId($id)) {
-                $this->UpdateBardienst();
-                $this->VulDiensten();
-                //$this->feedback_mail();
-                //$this->mail_all();
+    public function bardienst($string) {
+        if ($this->objBardienst->DetectIdFromMail($string))
+            if ($this->CheckAntwoord($antwoord)) {
+                if ($this->CheckId($id)) {
+                    $this->UpdateBardienst();
+                    $this->VulDiensten();
+                    //$this->feedback_mail();
+                    //$this->mail_all();
+                }
             }
-        }
     }
 
     function VulDiensten() {
