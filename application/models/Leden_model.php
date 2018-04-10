@@ -110,7 +110,7 @@ class Leden_model extends CI_Model {
     }
 
     public function CheckstringLen($string) {
-        return substr($string, 0, 1);
+        return (substr($string, 0, 1));
     }
 
     public function CheckstringIdLen($string, $len) {
@@ -150,7 +150,14 @@ class Leden_model extends CI_Model {
     }
 
     private function CreateIdForMail($code) {
-        return strlen(strlen($this->id)) . strlen($this->id) . $this->id . $code . now();
+        return strlen(strlen($this->id)) . strlen($this->id) . $this->id . $code . $this->rndm_string();
+        ;
+    }
+
+    private function rndm_string() {
+        $this->load->helper('string');
+        $rnd = random_string('numeric', 10);
+        return $rnd;
     }
 
     public function UpdateBardienst() {
