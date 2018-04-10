@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="CodeIgniter Application Test Suite" tests="14" assertions="13" failures="0" errors="0" time="0.601649">
-    <testsuite name="Leden_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Leden_test.php" fullPackage="Leden" tests="4" assertions="3" failures="0" errors="0" time="0.276736">
-      <testcase name="test_CheckAntwoord" class="Leden_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Leden_test.php" line="17" assertions="1" time="0.122246"/>
-      <testcase name="test_CheckIdTrue" class="Leden_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Leden_test.php" line="22" assertions="1" time="0.023007"/>
-      <testcase name="test_CheckIdFalse" class="Leden_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Leden_test.php" line="28" assertions="1" time="0.124824"/>
-      <testcase name="test_retrieve_db" class="Leden_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Leden_test.php" line="41" assertions="0" time="0.006659"/>
+  <testsuite name="CodeIgniter Application Test Suite" tests="14" assertions="13" failures="0" errors="0" time="0.657183">
+    <testsuite name="Leden_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Leden_test.php" fullPackage="Leden" tests="4" assertions="3" failures="0" errors="0" time="0.346061">
+      <testcase name="test_CheckAntwoord" class="Leden_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Leden_test.php" line="17" assertions="1" time="0.189286"/>
+      <testcase name="test_CheckIdTrue" class="Leden_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Leden_test.php" line="22" assertions="1" time="0.020475"/>
+      <testcase name="test_CheckIdFalse" class="Leden_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Leden_test.php" line="28" assertions="1" time="0.127699"/>
+      <testcase name="test_retrieve_db" class="Leden_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Leden_test.php" line="41" assertions="0" time="0.008601"/>
     </testsuite>
-    <testsuite name="Welcome_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Welcome_test.php" fullPackage="Welcome" tests="2" assertions="2" failures="0" errors="0" time="0.217427">
-      <testcase name="test_index" class="Welcome_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Welcome_test.php" line="13" assertions="1" time="0.134459"/>
-      <testcase name="test_method_404" class="Welcome_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Welcome_test.php" line="18" assertions="1" time="0.082968"/>
+    <testsuite name="Welcome_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Welcome_test.php" fullPackage="Welcome" tests="2" assertions="2" failures="0" errors="0" time="0.203564">
+      <testcase name="test_index" class="Welcome_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Welcome_test.php" line="13" assertions="1" time="0.123372"/>
+      <testcase name="test_method_404" class="Welcome_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\controllers\Welcome_test.php" line="18" assertions="1" time="0.080192"/>
     </testsuite>
-    <testsuite name="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" fullPackage="Leden.model" tests="8" assertions="8" failures="0" errors="0" time="0.107486">
-      <testcase name="test_CreateIdForMailYes" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="17" assertions="1" time="0.019829"/>
-      <testcase name="test_CreateIdForMailYesFalse" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="25" assertions="1" time="0.013267"/>
-      <testcase name="test_CreateIdForMailNo" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="33" assertions="1" time="0.012624"/>
-      <testcase name="test_CreateIdForMailNever" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="41" assertions="1" time="0.012415"/>
-      <testcase name="test_DetectIdFromMailTrue" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="49" assertions="1" time="0.012720"/>
-      <testcase name="test_DetectIdFromMailFalse" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="56" assertions="1" time="0.012406"/>
-      <testcase name="test_CheckstringLenTrue" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="63" assertions="1" time="0.011329"/>
-      <testcase name="test_CheckstringLenFalse" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="70" assertions="1" time="0.012896"/>
+    <testsuite name="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" fullPackage="Leden.model" tests="8" assertions="8" failures="0" errors="0" time="0.107558">
+      <testcase name="test_CreateIdForMailYes" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="17" assertions="1" time="0.017755"/>
+      <testcase name="test_CreateIdForMailYesFalse" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="25" assertions="1" time="0.012137"/>
+      <testcase name="test_CreateIdForMailNo" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="33" assertions="1" time="0.012662"/>
+      <testcase name="test_CreateIdForMailNever" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="41" assertions="1" time="0.012283"/>
+      <testcase name="test_DetectIdFromMailTrue" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="49" assertions="1" time="0.013238"/>
+      <testcase name="test_DetectIdFromMailFalse" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="56" assertions="1" time="0.011704"/>
+      <testcase name="test_CheckstringLenTrue" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="63" assertions="1" time="0.013397"/>
+      <testcase name="test_CheckstringLenFalse" class="Leden_model_test" file="E:\XAMPP3\htdocs\www\fwCiApp\application\tests\models\Leden_model_test.php" line="70" assertions="1" time="0.014382"/>
     </testsuite>
   </testsuite>
 </testsuites>

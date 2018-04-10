@@ -43,6 +43,11 @@ class Leden_model extends CI_Model {
         $this->output->enable_profiler($this->config->item('profiler'));
     }
 
+    /**
+     * Setter and getters
+     *
+     * @author Gerard
+     */
     public function setId($int) {
         $this->id = $int;
         return true;
@@ -57,25 +62,14 @@ class Leden_model extends CI_Model {
         return $query->result();
     }
 
-    public function CheckAntwoord($antw) {
-//check all mogelijke antwoorden
-//no, yes, never
-        if (strtoupper($antw) === "NO") {
-            $this->antwoord_bardienst = 9;
-            return (TRUE);
-        }
-        if (strtoupper($antw) === "YES") {
-            $this->antwoord_bardienst = 2;
-            return (TRUE);
-        }
-        if (strtoupper($antw) === "NEVER") {
-            $this->antwoord_bardienst = 8;
+    public function CheckAntwoord() {
+        if (isset($this->antwoord_bardienst)) {
             return (TRUE);
         }
         return (FALSE);
     }
 
-    public function CheckId($id = null) {
+    public function CheckId() {
         if (isset($this->id)) {
             return true;
         }
@@ -166,15 +160,14 @@ class Leden_model extends CI_Model {
                 $this->bar_statusupdate($this->antwoord_bardienst, 0, 0, $this->lidnummer);
                 $this->add_bardienst(0, $this->poule, $this->code, "");
                 return TRUE;
-            } else {
-                if ($this->dienst <> '9') {
-                    $this->bar_statusupdate($this->antwoord_bardienst, $this->poule, $this->code, $this->lidnummer);
-                    if ($this->antwoord_bardienst == 9) {
-                        $this->add_bardienst(0, $this->poule, $this->code, "");
-                    }
-                }
-                return TRUE;
             }
+            if ($this->dienst <> '9') {
+                $this->bar_statusupdate($this->antwoord_bardienst, $this->poule, $this->code, $this->lidnummer);
+                if ($this->antwoord_bardienst == 9) {
+                    $this->add_bardienst(0, $this->poule, $this->code, "");
+                }
+            }
+            return TRUE;
         }
         return false;
     }
@@ -184,19 +177,13 @@ class Leden_model extends CI_Model {
         $this->db->join("wedstrijden", "bardienst.poule=wedstrijden.poule and bardienst.code=wedstrijden.code");
         $this->db->where('id', $this->id);
         $query = $this->db->get();
-        $this->db->last_query();
-        //$this->db->debug_query_result($query);
-
         if ($query->num_rows() > 0) {
             return ($this->get_bar_from_id());
-            return true;
         }
         return FALSE;
     }
 
     function bar_statusupdate($status, $poule, $code, $lidnummer) {
-        //$this->load->helper('date');
-        //$this->load->helper('timestamp');
         $data = array('dienst' => $status,
             'poule' => $poule,
             'code' => $code,
@@ -204,20 +191,17 @@ class Leden_model extends CI_Model {
             'invdatum' => timestamp());
         $this->db->where('id', $this->id);
         $this->db->update('bardienst', $data);
-//debug_last_query();
-//debug_query_result($query);
-//DIE;
+        return true;
     }
 
     function add_bardienst($status, $poule, $code, $lidnummer) {
-//        $this->load->helper('date');
-//        $this->load->helper('timestamp');
         $data2 = array('poule' => $poule,
             'code' => $code,
             'lidnummer' => $lidnummer,
             'invdatum' => timestamp(),
             'dienst' => $status);
         $this->db->insert('bardienst', $data2);
+        return TRUE;
     }
 
     function add_chauffeur($status, $poule, $code, $lidnummer1, $lidnummer2, $lidnummer3) {
@@ -244,7 +228,6 @@ class Leden_model extends CI_Model {
             $this->poule = $query->row('poule');
             $this->lidnummer = $query->row('lidnummer');
             $this->dienst = $query->row('dienst');
-//            debug_var($this->dienst);
             return true;
         }
         return false;
@@ -277,24 +260,9 @@ class Leden_model extends CI_Model {
 
     function vul_bar_init() {
         $this->update_wedstrijd_code();
-        $this->db->select('wedstrijden.poule, wedstrijden.code, datum, tijd');
-        $this->db->from('wedstrijden');
-//$this->db->join('bardienst',"bardienst.poule=wedstrijden.poule and bardienst.code=wedstrijden.code", "left outer");
-//$this->db->where("bardienst.dienst is null");
-        $this->db->where("accode", "VHTSC");
-//tijd 00:00 uitgesloten voor bardienst
-        $this->db->where("tijd <>", "00:00");
-        $this->db->group_by('datum, tijd, poule, code');
-        $this->db->order_by('veld', 'asc');
-//moet nog order by bij komen ivm toeveoging dubbele entries... 18/9/12
-
-        $query = $this->db->get();
-//print_r($this->db->last_query());
-//debug_query_result($query);
-//die;
-
-        if ($query->num_rows() > 0) {
-            foreach ($query->result() as $rij) {
+        $query = $this->GetAllWedstrijdenVoorBardienst();
+        if (count($query) > 0) {
+            foreach ($query as $rij) {
                 $this->poule = $rij->poule;
                 $this->code = $rij->code;
                 if ($this->check_bar()) {
@@ -302,6 +270,25 @@ class Leden_model extends CI_Model {
                 }
             }
         }
+    }
+
+    private function GetAllWedstrijdenVoorBardienst() {
+        $this->db->select('wedstrijden.poule, wedstrijden.code, datum, tijd');
+        $this->db->from('wedstrijden');
+        $this->db->where("accode", "VHTSC");
+//tijd 00:00 uitgesloten voor bardienst
+        $this->db->where("tijd <>", "00:00");
+        //$this->db->group_by('datum, tijd, poule, code');
+        $this->db->group_by('datum, tijd, poule, code');
+        $this->db->order_by('datum, tijd', 'asc');
+//moet nog order by bij komen ivm toeveoging dubbele entries... 18/9/12
+        $query = $this->db->get();
+//        print_r($this->db->last_query());
+//        echo "<br><pre>";
+//        print_r($query->result());
+//        echo "</pre>";
+//        die;
+        return $query->result();
     }
 
     function vul_chauffeur_init() {
@@ -324,7 +311,7 @@ class Leden_model extends CI_Model {
     }
 
     function check_bar() {
-        $this->db->select('*');
+        $this->db->select('poule, dienst');
         $this->db->from('bardienst');
         $this->db->where('poule', $this->poule);
         $this->db->where('dienst', 8);

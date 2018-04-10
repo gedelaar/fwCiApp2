@@ -28,8 +28,8 @@ class Leden extends CI_Controller {
 
     public function bardienst($string) {
         if ($this->objBardienst->DetectIdFromMail($string))
-            if ($this->CheckAntwoord($antwoord)) {
-                if ($this->CheckId($id)) {
+            if ($this->CheckAntwoord()) {
+                if ($this->CheckId()) {
                     $this->UpdateBardienst();
                     $this->VulDiensten();
                     //$this->feedback_mail();
@@ -44,12 +44,12 @@ class Leden extends CI_Controller {
         $this->VulOpenDienstenIn();
     }
 
-    public function CheckAntwoord($antwoord = null) {
-        return $this->objBardienst->CheckAntwoord($antwoord);
+    public function CheckAntwoord() {
+        return $this->objBardienst->CheckAntwoord();
     }
 
-    public function CheckId($id = null) {
-        return $this->objBardienst->CheckId($id);
+    public function CheckId() {
+        return $this->objBardienst->CheckId();
     }
 
     public function UpdateBardienst() {
